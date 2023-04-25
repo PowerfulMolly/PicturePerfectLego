@@ -1,16 +1,4 @@
-Pour que le logiciel fonctione, il faut executer le fichier "interface.py".
-
-Après avoir exectué le fichier, une interface tkinter s'ouvre.
-
-Guide d'utilisation de l'interface :
-
- - Il faut d'abord téléverser une image deuips l'ordinateur de l'utilisateur via le bouton "Appuyer pour téléverser une image".
- - Après avoir téléversé l'image, on peut revinir en arrière en cliquant sur la croix rouge
- - Différents paramètres peuvent être séléctionnées : Couleur lego a utiliser, resolution a mettre (Le niveau N de résolution correpond a N*16 pixel en abcisse), ou fond personalisé si l'image est transparente.
- - Ensuite, il faut cliquer sur le bouton "Appuyer pour pixeliser" (Encore une fois, on peut revenir en arrière s'il le faut)
- - Pour finir, il faut cliquer sur le bouton "Appuyez pour obtenir les intructions" pour être en mesure de construire cette image en lego
-
- # LegoMosaicMaster (FR)
+# LegoMosaicMaster (FR)
 
 Projet de groupe en spécialité de NSI en 1ère.
 LegoMosaicMaster vous permet d'automatiser le processus de creation de pixel art en lego. Il vous permet de convertir n'importe quelle image en un modèle lego prêt à la construction.
@@ -30,13 +18,13 @@ LegoMosaicMaster vous permet d'automatiser le processus de creation de pixel art
 
 ## Installation (developpement):
 - copier le repository
-- installer les dependances `PIL`, `` sur votre environnement python
-- lancer `` (fichier dans `chemin/fichier.py`)
+- installer python, se placer dans le répertoire `sources` les dependances `PIL`, `jinja2` (ainsi que `tkinter`, `os`, `math`, normalement installés lors de l'installation de python) sur votre environnement python
+- lancer `interface.py` (fichier dans `sources/interface.py`)
 
 <br>
 
 ## Installation (production):
-- télécharger l'executable portable de votre système dans les releases: .exe (windows) ou (linux)
+- télécharger l'executable portable (nommé `PicturePerfectLego-exe.zip`) de votre système dans les releases ou en copier le repository, dézipper, ouvrir le dossier nouvellement créé et lancer `PicturePerfectLego.exe` (windows)
 
 <br>
 
