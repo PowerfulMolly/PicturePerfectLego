@@ -1,6 +1,10 @@
 __pycache__/
-image_instructions/*
-pixelised_image/*
+image_instructions/*.png
+image_instructions/*.jpg
+image_instructions/*.jpeg
+pixelised_image/*.png
+pixelised_image/*.jpg
+pixelised_image/*.jpeg
 new_image.*
 resized_image.*
 Instructions.html
