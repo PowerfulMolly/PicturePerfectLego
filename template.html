@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+      <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" >
+      <title>Instructions Lego</title> <!-- Le CSS est inclus dans le head --> <!-- cursor: url('controll modual.cur'), pointer; -->
+      <style>
+	  
+	:root{
+		--color1:#000814;
+		--color2:#001D3D;
+		--color3:#003566;
+		--color4:#FFC300;
+		--color5:#d4b620;
+		--color6:#FFEFA2;
+	}
+
+    #titre{
+        color: black;
+        font-family: 'Arial';
+        text-align: center;
+		align-content: center;
+		font-size: 75px;
+		font-style:gras;
+    }
+    #couleur{
+        color: black;
+        font-family: 'Arial';
+        text-align: center;
+		align-content: center;
+    }
+    .image{
+        width: 800px;
+        height: 800px;
+        padding: 0px;
+        margin-right: 2em;
+        border: 1px solid gray;
+    }
+    .image2{
+        padding: 0px;
+        margin-right: 1px;
+        border: 1px solid gray;
+    }
+    #liste{
+        text-align: left;
+    }
+    .next_image{
+        height: 13em; 
+        vertical-align:top; 
+        display: table-cell;
+    }
+    .sticky{
+        position: sticky;
+	    top: 0;
+        float: right;
+        width: 400px;
+        height: 400px;
+    }
+    .hover{
+        padding: 0px;
+        margin-right: 1px;
+        border: 3px solid red;
+        box-sizing: border-box;
+    }
+    .image2:hover{
+        padding: 0px;
+        margin-right: 1px;
+        border: 3px solid #ff726f;
+        box-sizing: border-box;
+    }
+
+
+
+      </style> <!-- on peut rajouter des bordures au .sticky avec -> border: 3px solid black; -->
+  </head>
+<body>
+<!-- Ici, c'est le titre de la page -->
+<div style="width:90%;margin-left:5%;margin-right:5%">
+<h1 id="titre">
+	<u>Instructions</u>
+	<br>
+	<font size="+5">pour construire le Pixel Art en Lego</font>
+</h1>
+{% for nombre in total_Lego %}
+
+<h2>Voici la liste des <u>{{nombre}}</u> briques lego à utiliser au total : </h2>
+
+{% endfor %}
+
+{% for color_piece in tableau_total_amount %}
+
+<p style="float: left"></p>
+<div {{color_piece[0]}} </div> : {{color_piece[1]}} Lego
+</p style="float: left">
+
+{% endfor %}
+
+<br><br>
+
+<div class="sticky">
+    <table>
+        
+            {% for colonne in tableau_image%}
+
+            <tr>
+                {% for ligne in colonne%}
+
+                    <td>{{ligne}}</td>
+
+                {% endfor %}
+
+            </tr>
+
+            {% endfor %}
+
+    </table>
+</div>
+
+<!-- Image de la page -->
+
+{% for page in pages %} 
+
+<div id='{{page[-1][0]}}'>
+	<div style="float: left">
+		{{page[-1][0]}}
+	</div>
+	<div>
+        <h2 class="next_image" id="couleur" style="width: 200px;"><u>Couleurs à utiliser pour cette section</u><br><br>
+            <div class="next_image" id="liste"><font size="+1">
+            {% for couleur in page %}
+
+                {% if couleur[1]!='Image' %}
+
+                <p style="float: right">
+                <div {{couleur[0]}} </div> : {{couleur[1]}} Lego
+                </p style="float: right">
+
+                {% endif %}
+
+            {% endfor %}
+            </font></div>
+        </h2>
+	<div style="clear:both"></div>
+	</div>
+</div>
+
+<hr>
+
+{% endfor %}
+
+<p id= "creator">Gaël SURUN - LGM 108 - Année 2023</p>
+</div>
+
+<script>
+
+    //document.getElementById("0_0_Image_16x16.png_image2").style.border = "2px solid red";
+
+    /*var image = {{ test|tojson }};
+
+    for (var i =0; i < image.length; i++) {
+        var obj = image[i];
+
+    } */
+
+    {% for image in test %}
+    
+
+        var div_id = '<img class="image" id="{{image}}" src="./image_instructions/{{image}}"/>'
+
+        var dessus = document.getElementById(div_id); // lui a changer
+
+        dessus.addEventListener("mouseover", function( event ) { // Une fonction qui s'active si on est sur l'image en question
+
+            var myElement = document.getElementById('{{image}}_image2');  //"0_0_Image_16x16.png_image2"
+
+            myElement.className = "hover";
+
+
+            var image = {{ test|tojson }};
+
+            for (var i = 0; i < image.length; i++) {
+
+                var obj = image[i];
+
+                if(obj == '{{image}}'){
+
+                } else {
+
+                    var concatenate = obj+ "_image2"
+
+                    var Other_myElement = document.getElementById(concatenate);
+
+                    Other_myElement.className = "image2";
+
+                }
+            }
+
+        }, false);
+
+
+
+{% endfor %}
+
+</script>
+
+
+</body>  
+</html>

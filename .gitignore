@@ -1,0 +1,5 @@
+__pycache__/
+image_instructions/*
+pixelised_image/*
+new_image.*
+resized_image.*
