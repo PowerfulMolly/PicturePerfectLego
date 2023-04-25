@@ -1,3 +1,5 @@
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 from PIL import Image
 import math as m
 from couleur_proche import *
@@ -115,7 +117,8 @@ def pixelisation(pixel, im, color_settings, name_fichier):
         im.putpixel((x + d, y + e), (R, V, B))
     memo_couleur.append((R, V, B))
 
-  nom = "./pixelised_image/pixel_{}_{}".format(pixel, name_fichier)   #C'est le nom de l'image pixelisée + son emplacement dans un fichier nommé "pixelised_image"
+  print(dir_path)
+  nom = dir_path+"/pixelised_image/pixel_{}_{}".format(pixel, name_fichier)   #C'est le nom de l'image pixelisée + son emplacement dans un fichier nommé "pixelised_image"
   im.save(nom)
   return memo_couleur, im
 
@@ -134,7 +137,7 @@ def pixelisation_for1(pixel, im, color_settings, name_fichier):
       memo_couleur.append((R, V, B))
   nom = "pixel_{}_{}".format(pixel, name_fichier)
   #print(nom, "est été créé !")
-  im.save(nom)
+  im.save(dir_path+'/'+nom)
   return memo_couleur, im
 
 
@@ -169,7 +172,7 @@ def pixelisation_for_transparent(pixel, im, color_settings, name_fichier,
 
   nom = "pixel_transparent_{}_{}".format(pixel, name_fichier)
   #print(nom, "est été créé !")
-  im.save(nom)
+  im.save(dir_path+'/'+nom)
   return memo_couleur
 
 

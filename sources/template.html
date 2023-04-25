@@ -4,7 +4,10 @@
       <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" >
       <title>Instructions Lego</title> <!-- Le CSS est inclus dans le head --> <!-- cursor: url('controll modual.cur'), pointer; -->
       <style>
-	  
+
+    * {
+        font-family: 'Arial';
+    }
 	:root{
 		--color1:#000814;
 		--color2:#001D3D;
@@ -44,7 +47,6 @@
         text-align: left;
     }
     .next_image{
-        height: 13em; 
         vertical-align:top; 
         display: table-cell;
     }
@@ -67,6 +69,11 @@
         border: 3px solid #ff726f;
         box-sizing: border-box;
     }
+    p {
+        color: black;
+        font-size: 20px;
+        font-weight: bold;
+    }
 
 
 
@@ -80,19 +87,24 @@
 	<br>
 	<font size="+5">pour construire le Pixel Art en Lego</font>
 </h1>
+
 {% for nombre in total_Lego %}
 
 <h2>Voici la liste des <u>{{nombre}}</u> briques lego à utiliser au total : </h2>
 
 {% endfor %}
 
-{% for color_piece in tableau_total_amount %}
-
-<p style="float: left"></p>
-<div {{color_piece[0]}} </div> : {{color_piece[1]}} Lego
-</p style="float: left">
-
-{% endfor %}
+<table>
+    {% for tableau_total_amount in tableau_total_amount_chunked %}
+        <tr>
+            {% for color_piece in tableau_total_amount %}
+                <td style="width:10em">
+                    <div style="vertical-align:middle"><div {{color_piece[0]}} </div><p>: {{color_piece[1]}} Lego</p></div>
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 <br><br>
 
@@ -119,26 +131,26 @@
 
 {% for page in pages %} 
 
-<div id='{{page[-1][0]}}'>
+<div id='{{page[-1][2]}}_div'>
 	<div style="float: left">
 		{{page[-1][0]}}
 	</div>
 	<div>
-        <h2 class="next_image" id="couleur" style="width: 200px;"><u>Couleurs à utiliser pour cette section</u><br><br>
-            <div class="next_image" id="liste"><font size="+1">
+        <h2 class="next_image" id="couleur" style="width: 18em;"><u>Couleurs à utiliser pour cette section</u></h2>
+            <div style="display:table; width:10em" id="liste">
             {% for couleur in page %}
 
                 {% if couleur[1]!='Image' %}
 
-                <p style="float: right">
-                <div {{couleur[0]}} </div> : {{couleur[1]}} Lego
-                </p style="float: right">
+                <div>
+                    <div {{couleur[0]}} </div>
+                    <p>: {{couleur[1]}} Lego</p>
+                </div>
 
                 {% endif %}
 
             {% endfor %}
-            </font></div>
-        </h2>
+            </div>
 	<div style="clear:both"></div>
 	</div>
 </div>
@@ -163,9 +175,9 @@
 
     {% for image in test %}
     
-
-        var div_id = '<img class="image" id="{{image}}" src="./image_instructions/{{image}}"/>'
-
+        {% for loca in repertoire%}
+        var div_id = '{{image}}_div'
+        {% endfor %}
         var dessus = document.getElementById(div_id); // lui a changer
 
         dessus.addEventListener("mouseover", function( event ) { // Une fonction qui s'active si on est sur l'image en question

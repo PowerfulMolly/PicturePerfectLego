@@ -1,8 +1,16 @@
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 from tkinter import *
 from tkinter.messagebox import *  # Pour utiliser les alertes de notre os
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import math as m
+
+import Main_programme
+import associations_image
+import for_transparent
+import main_pix
+import couleur_proche
 
 LARGEUR_IMAGES = 500 #Ces chiffres sont le nombre de pixels maximums pour afficher l'image sur l'interface tkinter en abcisse et en ordonéees
 HAUTEUR_IMAGES = 350
@@ -33,7 +41,7 @@ fenetre.title('PicturePerfectLego') #Ceci est le titre de la fenêtre
 
 #--------------------------------------------------Affichage du logo (En haut à gauche)--------------------------------------------------#
 
-image_logo = PhotoImage(file="./Logo.png")
+image_logo = PhotoImage(file=dir_path+"/Logo.png")
 
 canvas = Canvas(fenetre,width=100, height=100)
 canvas.create_image(0, 0, anchor=NW, image=image_logo)
@@ -95,7 +103,7 @@ def f_image():
 
   global nom_resized
   nom_resized = 'resized_image.' + extention
-  resized_image.save(nom_resized) # On sauvegarde la nouvelle image nommée "resized_image" avec la bonne extension
+  resized_image.save(dir_path+'/'+nom_resized) # On sauvegarde la nouvelle image nommée "resized_image" avec la bonne extension
 
   if image_transparent(resized_image) == True: # Un nouvleau paramètre apparait si l'image a des pixels transparents
     
@@ -149,7 +157,7 @@ def f_image():
   button_pixelisation.grid(row=2, column=0, pady=2) #On crée le bouton qui déclenche la pixelisation
 
   #-----------------------------Création d'un croix à droite de l'image pour pouvoir revenir en arrière-----------------------------#
-  image_croix = PhotoImage(file="croix_50x50.png")
+  image_croix = PhotoImage(file=dir_path+"/croix_50x50.png")
 
   global Croix1
 
@@ -266,7 +274,7 @@ def f_fond2(): #C'est une fonction qui suprime l'image précédente pour mettre 
 
   #CREATION DE LA PREMIERE CROIX -----------------------------
 
-  image_croix = PhotoImage(file="croix_50x50.png")
+  image_croix = PhotoImage(file=dir_path+"/croix_50x50.png")
 
   global Croix1
 
@@ -508,7 +516,7 @@ def IMAGE_pixelisation():
 
   pixel = sizeAb // resolution
 
-  nom_pixelised = "./pixelised_image/pixel_{}_{}".format(pixel, nom_resized) #C'est le nom de l'image pixelisée + son emplacement dans un fichier nommé "pixelised_image"
+  nom_pixelised = dir_path+"/pixelised_image/pixel_{}_{}".format(pixel, nom_resized) #C'est le nom de l'image pixelisée + son emplacement dans un fichier nommé "pixelised_image"
 
 
   image_pixelised = ImageTk.PhotoImage(file=nom_pixelised)
@@ -534,7 +542,7 @@ def IMAGE_pixelisation():
 
   #CREATION DE LA DEUXIEME CROIX-----------------------------
 
-  image_croix = PhotoImage(file="croix_50x50.png")
+  image_croix = PhotoImage(file=dir_path+"/croix_50x50.png")
 
   global Croix2
 

@@ -1,3 +1,5 @@
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 from resizeimage import resizeimage
 from PIL import Image
 
@@ -38,7 +40,7 @@ def f_asso_image(nomimage,nomfond):
       if A<=15: #Tolérance de 15 sur alpha
         img.putpixel((x,y),(R,G,B))
         
-  img.save("new_image.png")
+  img.save(dir_path+"/new_image.png")
   return()
 
 
@@ -56,6 +58,6 @@ def f_asso_color(nomimage,color_fond):
       if A<=15: #Tolérance de 15 sur alpha
         img.putpixel((x,y),color_fond)
         
-  img.save("new_image.png")
+  img.save(dir_path+"/new_image.png")
   return()
 

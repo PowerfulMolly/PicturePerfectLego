@@ -1,16 +1,19 @@
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+from jinja2 import Template
+import main_pix
+import math as m
+from PIL import Image
+import webbrowser
 
 def pixelisation_execution(color_settings, resolution, name_fichier):
-  from jinja2 import Template
-  import main_pix
-  import math as m
-  from PIL import Image
 
   #--------------------------------------------------------------------EXECTUTION de la PIXELISATION--------------------------------------------------------------------
 
 
   Transparent_remplacement=(239,239,238) #De base le fond est Blanc couleur lego
 
-  if main_pix.is_Transparent(name_fichier) == False:
+  if main_pix.is_Transparent(dir_path+'/'+name_fichier) == False:
     img, nbpixel, name_fichier, resolutionY = main_pix.rognage_image(resolution, name_fichier)
     is_Transparent=False
     if nbpixel <= 1:  # aucun changement
@@ -35,16 +38,8 @@ def pixelisation_execution(color_settings, resolution, name_fichier):
 
 def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transparent):
 
-  from PIL import Image
-  import webbrowser
-  import math as m
-  from jinja2 import Template
-  import main_pix
-  
-
-
   # Get File Content in String
-  jinja2_template_string = open("template.html", 'r',newline='\n').read()
+  jinja2_template_string = open(dir_path+"/template.html", 'r',newline='\n').read()
 
   # Create Template Object
   template = Template(jinja2_template_string)
@@ -117,7 +112,7 @@ def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transpare
       R, V, B = lego_color[0]
     if len(lego_color[0])==4:
       R, V, B, A = lego_color[0]
-    lego_color[0]="width:25px; height:25px; border:1px solid rgb({}, {}, {}); background-color: rgb({}, {}, {}); float: left; margin-right: 1em; border: 2px solid black;".format(R,V,B,R,V,B)
+    lego_color[0]="width:25px; height:25px; border:1px solid rgb({}, {}, {}); background-color: rgb({}, {}, {}); float: left; margin-right: 0.5em; border: 2px solid black;".format(R,V,B,R,V,B)
     lego_color[0]='style="{}">'.format(lego_color[0])
 
       
@@ -151,7 +146,7 @@ def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transpare
         resolutionY=reste_Y
     for h in range(nb_fois):
       name16x16="{}_{}_Image_16x16.png".format(h,y)
-      name16x16_format='<a href="#{}"><img id="{}_image2" class="image2" src="./image_instructions/{}" style="width: {}px; height: {}px;"/></a>'.format(name16x16,name16x16,name16x16,size16x16_pixel,size16x16_pixel)
+      name16x16_format=f'<a href="#{name16x16}"><img id="{name16x16}_image2" class="image2" src="{dir_path}/image_instructions/{name16x16}" style="width: {size16x16_pixel}px; height: {size16x16_pixel}px;"/></a>'
       tabimg_A_16x16.append(name16x16_format)
       tabimg_C_16x16.append(name16x16)
       indice = -1
@@ -179,15 +174,16 @@ def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transpare
           indice = -1
           if find == False:
             pages.append([couleur, 1])
-      nom_avec_repertoire="./image_instructions/"+name16x16
+      nom_avec_repertoire=dir_path+"/image_instructions/"+name16x16
       image.save(nom_avec_repertoire, "PNG")
-      nom_image='<img class="image" id="{}" src="./image_instructions/{}"/>'.format(name16x16,name16x16)
-      tabImage=[nom_image,'Image']
+      nom_image=f'<img class="image" id="{name16x16}" src="{dir_path}/image_instructions/{name16x16}"/>'
+      tabImage=[nom_image,'Image',name16x16]
       pages.append(tabImage)
       final_page.append(pages)
     tabimg_B_16x16.append(tabimg_A_16x16)
     tabimg_A_16x16=[]
 
+  
   for page in final_page:
       for couleur in page:
           if couleur[1]!='Image':
@@ -195,7 +191,7 @@ def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transpare
                 R, V, B = couleur[0]
               if is_Transparent==True:
                 R, V, B, A = couleur[0]
-              couleur[0]="width:25px; height:25px; border:1px solid rgb({}, {}, {}); background-color: rgb({}, {}, {}); float: left; margin-right: 1em; border: 2px solid black;".format(R,V,B,R,V,B)
+              couleur[0]="width:25px; height:25px; border:1px solid rgb({}, {}, {}); background-color: rgb({}, {}, {}); float: left; margin-right: 0.5em; border: 2px solid black;".format(R,V,B,R,V,B)
               couleur[0]='style="{}">'.format(couleur[0])
 
 
@@ -204,17 +200,20 @@ def f_inscructions(nb_pixel, resolution, resolutionY, memo_couleur, is_Transpare
 
   #--------------------------------------------------------------------Création de la page web--------------------------------------------------------------------
 
+  repertoire=[dir_path]
+
   # Render HTML Template String
-  html_template_string = template.render(pages = final_page, tableau_image = tabimg_B_16x16, test=tabimg_C_16x16, tableau_total_amount=liste_total, total_Lego=tab_Somme) #La variable test est utilisée pour le javascript en tant que liste des noms des images utilisées
+  print([liste_total[x:x+10] for x in range(0, len(liste_total), 10)])
+  html_template_string = template.render(pages = final_page, tableau_image = tabimg_B_16x16, test=tabimg_C_16x16, tableau_total_amount=liste_total, tableau_total_amount_chunked=[liste_total[x:x+10] for x in range(0, len(liste_total), 10)], total_Lego=tab_Somme, repertoire=repertoire) #La variable test est utilisée pour le javascript en tant que liste des noms des images utilisées
 
   ##print(html_template_string)
 
-  doc = open("Instructions.html","w",newline='\n')
+  doc = open(dir_path+"/Instructions.html","w",newline='\n')
 
   doc.write(html_template_string)
 
   #On ouvre le ficher html directememt
 
-  webbrowser.open_new_tab('Instructions.html')
+  webbrowser.open_new_tab(dir_path+'/Instructions.html')
 
   return ()
