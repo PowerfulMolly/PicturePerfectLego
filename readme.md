@@ -5,7 +5,8 @@ LegoMosaicMaster vous permet d'automatiser le processus de creation de pixel art
 
 <br>
 
-![]()
+![interface](./doc/interface.PNG)
+![web](./doc/web.PNG)
 
 ## Fonctionnalités:
 - pixelisation d'une image et conversion de ses couleurs en celles disponibles à l'achat chez lego
